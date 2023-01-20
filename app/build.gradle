@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -16,10 +17,19 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "NEWS_API_KEY", "9e39934e997343cf8a4b6010d533a801\"")
+
+            buildConfigField("String", "BASE_URL", "\"https://newsapi.org/v2\"")
+        }
+
+        debug {
+            buildConfigField("String", "NEWS_API_KEY", "\"9e39934e997343cf8a4b6010d533a801\"")
+            buildConfigField("String", "BASE_URL", "\"https://newsapi.org/v2\"")
         }
     }
     compileOptions {
@@ -28,6 +38,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += [
+                "-Xjvm-default=all",
+        ]
     }
     buildFeatures {
         viewBinding true
@@ -45,4 +58,12 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.google.code.gson:gson:2.10'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    implementation "com.squareup.okhttp3:logging-interceptor:4.10.0"
+
+    implementation 'com.github.kirich1409:viewbindingpropertydelegate:1.5.6'
 }

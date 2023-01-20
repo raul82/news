@@ -9,12 +9,26 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.example.divtech.MainViewModel
+import com.example.divtech.network.AUTH_API
 import com.example.news.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
+
+    val viewModel: MainViewModel by viewModels {
+        MainViewModelFactory(
+            MySharedPreferences.init(
+                this
+            )
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +42,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -55,4 +66,49 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
+
+
+    override fun onStart() {
+        println("MainActivity onStart")
+        super.onStart()
+    }
+
+    override fun onResume() {
+        println("MainActivity onResume")
+        super.onResume()
+    }
+
+    override fun onPause() {
+        println("MainActivity onPause")
+        super.onPause()
+    }
+
+    override fun onStop() {
+        println("MainActivity onStop")
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        println("MainActivity onDestroy")
+        super.onDestroy()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        println("MainActivity  onSaveInstanceState")
+        super.onSaveInstanceState(outState)
+
+    }
+
+
+    class MainViewModelFactory(val sharedPreferences: MySharedPreferences) :
+        ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+                return MainViewModel(sharedPreferences, AUTH_API.newInstance()) as T
+            }
+
+            throw IllegalArgumentException("Unknown ViewModel Class")
+        }
+    }
+
 }

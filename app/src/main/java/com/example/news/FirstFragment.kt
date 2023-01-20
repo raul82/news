@@ -1,5 +1,6 @@
 package com.example.news
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -31,7 +32,7 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        println("FirstFragment onViewCreated" )
         binding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
@@ -39,6 +40,39 @@ class FirstFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        println("FirstFragment onDestroyView" )
+
         _binding = null
     }
+
+
+    override fun onAttach(activity: Activity) {
+        super.onAttach(activity)
+        println("FirstFragment onDestroyView" )
+    }
+
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+     }
+     override fun onStart (){
+         super.onStart()
+     }
+     override fun onResume (){
+         super.onResume()
+         println("FirstFragment onResume" )
+     }
+     override fun onPause (){
+         super.onPause()
+         println("FirstFragment onPause" )
+     }
+     override fun onStop (){
+         super.onStop()
+     }
+     override fun onDestroy (){
+         super.onDestroy()
+     }
+     override fun onDetach (){
+         super.onDetach()
+     }
+     override fun onSaveInstanceState(outState: Bundle) {}
 }
