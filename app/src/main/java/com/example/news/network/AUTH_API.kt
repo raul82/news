@@ -2,15 +2,15 @@ package com.example.divtech.network
 
 
 import com.example.news.BuildConfig
+import com.example.news.models.ArticleDto
+import okhttp3.HttpUrl
 
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 import java.util.concurrent.TimeUnit
 
 interface AUTH_API {
@@ -29,30 +29,33 @@ interface AUTH_API {
     }
 
 
-    @POST("api/auth/get-token")
-    suspend fun auth(@Body request : Map<String, String> ): Map<String, String>
+    @GET("top-headlines")
+    suspend fun query(
+        @Query("apiKey") apiKey: String = "9e39934e997343cf8a4b6010d533a801",
+        @Query("category") category : String ="science",
+        @Query("q") q: String = "",
+        ): ArticleDto
 
-
-
-
-
-
-/*    @POST("api/search-trains")
-    suspend fun getTrains( @Header("Authorization")  token: String , @Body request : TrainRequest): TrainsDto
-
-    @POST("api/search-trains")
-    suspend fun getTicket( @Header("Authorization")  token: String , @Body request : TicketRequest): Map<String, Any>*/
 }
 
-
-
+// https://newsapi.org/v2/top-headlines?category=science&country=ru&apiKey=9e39934e997343cf8a4b6010d533a801&q=
 
 private fun interceptor(): Interceptor {
     return Interceptor { chain: Interceptor.Chain ->
         val request = chain.request()
+        val url = request.url.newBuilder()
+//            .addQueryParameter("category", "science")
+            .addQueryParameter("country", "ru")
+            .addQueryParameter("apiKey","9e39934e997343cf8a4b6010d533a801")
+            .build();
+
+        request
             .newBuilder()
             .addHeader("X-Requested-With", "XMLHttpRequest")
+
+            .url(url)
             .build()
+
         chain.proceed(request)
     }
 }

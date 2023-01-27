@@ -12,9 +12,11 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.divtech.MainViewModel
 import com.example.divtech.network.AUTH_API
 import com.example.news.databinding.ActivityMainBinding
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 

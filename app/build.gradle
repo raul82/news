@@ -24,12 +24,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "NEWS_API_KEY", "9e39934e997343cf8a4b6010d533a801\"")
 
-            buildConfigField("String", "BASE_URL", "\"https://newsapi.org/v2\"")
+            buildConfigField("String", "BASE_URL", "\"https://newsapi.org/v2/\"")
         }
 
         debug {
             buildConfigField("String", "NEWS_API_KEY", "\"9e39934e997343cf8a4b6010d533a801\"")
-            buildConfigField("String", "BASE_URL", "\"https://newsapi.org/v2\"")
+            buildConfigField("String", "BASE_URL", "\"https://newsapi.org/v2/\"")
         }
     }
     compileOptions {
