@@ -1,7 +1,6 @@
 package com.example.news
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -12,11 +11,9 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.example.divtech.MainViewModel
-import com.example.divtech.network.AUTH_API
+import com.example.divtech.network.API
 import com.example.news.databinding.ActivityMainBinding
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -106,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-                return MainViewModel(sharedPreferences, AUTH_API.newInstance()) as T
+                return MainViewModel(sharedPreferences, API.newInstance()) as T
             }
 
             throw IllegalArgumentException("Unknown ViewModel Class")

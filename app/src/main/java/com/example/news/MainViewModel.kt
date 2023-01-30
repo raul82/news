@@ -3,8 +3,7 @@ package com.example.divtech
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.divtech.models.*
-import com.example.divtech.network.AUTH_API
+import com.example.divtech.network.API
 import com.example.news.GlobalState
 import com.example.news.MySharedPreferences
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -15,7 +14,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 
 sealed class LoadingState {
     object Default : LoadingState()
@@ -24,7 +22,7 @@ sealed class LoadingState {
 }
 
 
-class MainViewModel( val pref: MySharedPreferences,  val authApi: AUTH_API) :
+class MainViewModel( val pref: MySharedPreferences,  val authApi: API) :
     ViewModel() {
 
     var currentStateLiveDate =
@@ -34,15 +32,6 @@ class MainViewModel( val pref: MySharedPreferences,  val authApi: AUTH_API) :
     var loadingStateLiveDate =
         MutableLiveData<LoadingState>().apply { value = LoadingState.Default }
 
-//    var allTicketsLiveData =
-//        MutableLiveData<List<TicketRequest>>()
-
-/*    val cityList = listOf(
-        City("AAA"),
-        City("BBB"),
-        City("CCC"),
-        City("DDD"),
-    )*/
 
     var counter = 0
     var counterForChannel = 0
@@ -69,8 +58,9 @@ class MainViewModel( val pref: MySharedPreferences,  val authApi: AUTH_API) :
                 }
         }
 
+    val list = mutableListOf(1,2,3)
 
-
+        list.reduce()
     }
 
     var phone: String? = null
