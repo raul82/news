@@ -7,14 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.news.databinding.FragmentFirstBinding
+import com.example.news.databinding.FragmentMainBinding
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class FirstFragment : Fragment() {
+class MainFragment : Fragment() {
 
-    private var _binding: FragmentFirstBinding? = null
+    private var _binding: FragmentMainBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,22 +25,22 @@ class FirstFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentFirstBinding.inflate(inflater, container, false)
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        println("FirstFragment onViewCreated" )
+        println("MainFragment onViewCreated" )
         binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+       
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        println("FirstFragment onDestroyView" )
+        println("MainFragment onDestroyView" )
 
         _binding = null
     }
@@ -48,7 +48,7 @@ class FirstFragment : Fragment() {
 
     override fun onAttach(activity: Activity) {
         super.onAttach(activity)
-        println("FirstFragment onDestroyView" )
+        println("MainFragment onDestroyView" )
     }
 
      override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,11 +59,11 @@ class FirstFragment : Fragment() {
      }
      override fun onResume (){
          super.onResume()
-         println("FirstFragment onResume" )
+         println("MainFragment onResume" )
      }
      override fun onPause (){
          super.onPause()
-         println("FirstFragment onPause" )
+         println("MainFragment onPause" )
      }
      override fun onStop (){
          super.onStop()
@@ -75,4 +75,17 @@ class FirstFragment : Fragment() {
          super.onDetach()
      }
      override fun onSaveInstanceState(outState: Bundle) {}
+
+
+
+    companion object {
+        fun getNewInstance(): MainFragment {
+            return MainFragment().apply {
+                /*           arguments = Bundle().apply {
+                putInt(EXTRA_NUMBER, number)
+                putLong(EXTRA_TIME, System.currentTimeMillis())
+            }*/
+            }
+        }
+    }
 }

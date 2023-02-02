@@ -1,9 +1,8 @@
-package com.example.news
+package com.example.news.data
 
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 object MySharedPreferences {
     lateinit var preferences: SharedPreferences

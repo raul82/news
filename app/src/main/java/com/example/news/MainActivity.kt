@@ -8,25 +8,27 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.divtech.MainViewModel
-import com.example.divtech.network.API
 import com.example.news.databinding.ActivityMainBinding
+import com.github.terrakok.cicerone.*
+import com.github.terrakok.cicerone.androidx.AppNavigator
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    val viewModel: MainViewModel by viewModel()
 
-    val viewModel: MainViewModel by viewModels {
-        MainViewModelFactory(
-            MySharedPreferences.init(
-                this
-            )
-        )
+    val router : Router by inject()
+    val navigatorHolder : NavigatorHolder by inject()
+
+    private val navigator: Navigator = object : AppNavigator(this, R.id.main_container) {
+        override fun applyCommands(commands: Array<out Command>) {
+            super.applyCommands(commands)
+            supportFragmentManager.executePendingTransactions()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,10 +39,15 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
 
+        if (savedInstanceState == null) {
+            navigator.applyCommands(arrayOf<Command>(Replace(Screens.MainFragment())))
+        }
+/*
+        viewModel.loadingStateLiveDate.observe(this) {
+
+        }
+*/
 
     }
 
@@ -60,13 +67,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
-    }
-
-
     override fun onStart() {
         println("MainActivity onStart")
         super.onStart()
@@ -75,9 +75,11 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         println("MainActivity onResume")
         super.onResume()
+        navigatorHolder.setNavigator(navigator)
     }
 
     override fun onPause() {
+        navigatorHolder.removeNavigator()
         println("MainActivity onPause")
         super.onPause()
     }
@@ -98,7 +100,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
+/*
     class MainViewModelFactory(val sharedPreferences: MySharedPreferences) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -108,6 +110,6 @@ class MainActivity : AppCompatActivity() {
 
             throw IllegalArgumentException("Unknown ViewModel Class")
         }
-    }
+    }*/
 
 }

@@ -1,4 +1,4 @@
-package com.example.divtech.network
+package com.example.news.data
 
 
 import com.example.news.BuildConfig
@@ -19,6 +19,5 @@ interface API {
         @Query("category") category: String = "science",
         @Query("q") q: String = "",
     ): ArticleDto
-
 }
 
