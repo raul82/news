@@ -8,7 +8,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
-import com.example.divtech.MainViewModel
+import com.example.news.MainViewModel
 import com.example.news.databinding.ActivityMainBinding
 import com.github.terrakok.cicerone.*
 import com.github.terrakok.cicerone.androidx.AppNavigator
@@ -43,11 +43,9 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             navigator.applyCommands(arrayOf<Command>(Replace(Screens.MainFragment())))
         }
-/*
         viewModel.loadingStateLiveDate.observe(this) {
 
         }
-*/
 
     }
 

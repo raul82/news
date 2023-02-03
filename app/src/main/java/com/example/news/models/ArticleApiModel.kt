@@ -1,6 +1,6 @@
 package com.example.news.models
 
-data class ArticleDto(
+data class ArticleApiModel(
     val status: String,
     val totalResults: Int,
     val articles: List<Article>

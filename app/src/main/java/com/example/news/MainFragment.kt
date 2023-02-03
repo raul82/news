@@ -5,44 +5,46 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.news.MainViewModel
 import com.example.news.databinding.FragmentMainBinding
+import kotlinx.coroutines.flow.collect
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class MainFragment : Fragment() {
+class MainFragment : Fragment(R.layout.fragment_main) {
 
-    private var _binding: FragmentMainBinding? = null
+    private val mainViewModel :  MainViewModel   by viewModel()
+    private val binding  by viewBinding (FragmentMainBinding::bind )
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
-        return binding.root
-
-    }
+    private lateinit var adapter : ArticlesAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         println("MainFragment onViewCreated" )
-        binding.buttonFirst.setOnClickListener {
-       
+
+
+        adapter = ArticlesAdapter()
+
+        binding.rvArticles.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvArticles.adapter = adapter
+
+        lifecycleScope.launchWhenStarted {
+            mainViewModel.articlesFlow().collect{
+                adapter.setItems(it)
+            }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         println("MainFragment onDestroyView" )
-
-        _binding = null
     }
 
 

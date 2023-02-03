@@ -1,4 +1,4 @@
-package com.example.divtech
+package com.example.news
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -32,31 +32,20 @@ class MainViewModel(private val articlesRepository: ArticlesRepository) :
     val navigatorHolder: NavigatorHolder by inject()
 
     var currentStateLiveDate =
-
         MutableLiveData<GlobalState>().apply { value = GlobalState.REGISTRATION }
 
     var loadingStateLiveDate =
         MutableLiveData<LoadingState>().apply { value = LoadingState.Default }
 
 
-    var counter = 0
-    var counterForChannel = 0
-    val data : Flow<Int> = flow {
-        while (true) {
-            emit(counter++)
-            delay(3000)
-        }
-    }
+     suspend fun articlesFlow() = articlesRepository.getArticles()
 
-    val channel = Channel<Int>()
-
-    private var articles : List<Article>? = null
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            articles =   articlesRepository.getArticles()
+
         }
 
-        router.exit()
+
     }
 
     val exceptionHandler = CoroutineExceptionHandler { _, exception ->
