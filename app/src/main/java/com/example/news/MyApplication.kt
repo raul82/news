@@ -5,6 +5,7 @@ import com.example.news.DI.navigationModule
 import com.example.news.DI.netWorkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
+import org.koin.androidx.fragment.koin.fragmentFactory
 import org.koin.core.context.startKoin
 
 class MyApplication : Application(){
@@ -15,7 +16,7 @@ class MyApplication : Application(){
         startKoin {
             androidLogger()
             androidContext(this@MyApplication)
-
+            fragmentFactory()
             modules(netWorkModule, navigationModule)
         }
 
